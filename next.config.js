@@ -2,6 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  trailingSlash: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
+  swcMinify: true,
+  output: 'standalone',
 }
 
 module.exports = nextConfig
