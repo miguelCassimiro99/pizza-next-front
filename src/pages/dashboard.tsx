@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { useContext } from 'react';
+import { AuthContext } from "../contexts/AuthContext";
 
 export default function Home() {
+  const { user } = useContext(AuthContext);
   return (
     <div className="h-screen w-full">
       <nav className="w-full h-16 bg-slate-900 absolute flex justify-between px-4 items-center text-white">
-        <span>Welcome, Miguel</span>
+        <span>Welcome { user?.name }</span>
         <Link href="#" className="cursor-pointer">
           Logout
         </Link>
