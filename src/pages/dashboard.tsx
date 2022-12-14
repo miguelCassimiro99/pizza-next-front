@@ -8,7 +8,7 @@ import { GetServerSideProps } from "next";
 import { redirect } from "next/dist/server/api-utils";
 
 
-export default function Home() {
+export default function Dashboard() {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
