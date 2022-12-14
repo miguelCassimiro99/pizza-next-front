@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
+const basePath = '/dashboard'
 const nextConfig = {
+  basePath,
   reactStrictMode: true,
   swcMinify: true,
   trailingSlash: true,

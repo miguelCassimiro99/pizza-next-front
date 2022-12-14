@@ -1,4 +1,6 @@
-import { useContext } from "react";
+import Router from "next/router";
+import { parseCookies } from "nookies";
+import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form"
 import { AuthContext } from '../contexts/AuthContext'
 
@@ -10,6 +12,11 @@ export interface FormValues {
 export default function Login() {
   const { register, handleSubmit } = useForm<FormValues>();
   const { signIn } = useContext(AuthContext)
+
+  useEffect(() => {
+    const { 'access_token': token } = parseCookies();
+    if(token) Router.push('/dashboard');
+  }, [])
 
   async function handleSignIn(data: FormValues) {
     try {

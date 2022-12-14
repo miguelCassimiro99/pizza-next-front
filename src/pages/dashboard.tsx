@@ -1,16 +1,33 @@
 import Link from "next/link";
 import { useContext } from 'react';
 import { AuthContext } from "../contexts/AuthContext";
+import { useEffect } from 'react';
+import { parseCookies, destroyCookie } from "nookies";
+import Router from "next/router";
+import { GetServerSideProps } from "next";
+import { redirect } from "next/dist/server/api-utils";
+
 
 export default function Home() {
   const { user } = useContext(AuthContext);
+
+  useEffect(() => {
+    const { 'access_token': token } = parseCookies();
+    if(!token) Router.push('/login');
+  }, [])
+
+  function logout() {
+    destroyCookie(undefined, 'access_token');
+    Router.push('/login');
+  }
+
   return (
     <div className="h-screen w-full">
       <nav className="w-full h-16 bg-slate-900 absolute flex justify-between px-4 items-center text-white">
         <span>Welcome { user?.name }</span>
-        <Link href="#" className="cursor-pointer">
+        <button className="cursor-pointer" onClick={() => logout()} >
           Logout
-        </Link>
+        </button>
       </nav>
       <main className="flex h-full justify-center items-center">
         <div className="border rounded-lg shadow-md h-20 flex justify-start items-center w-[400px]">
@@ -33,3 +50,23 @@ export default function Home() {
     </div>
   )
 }
+
+//TODO: if needs the validation on server side adapt the request
+//? The parseCookies using the api service does not work in serverside withou the 'Context'
+// export const getServerSideProps: GetServerSideProps = async (ctx) => {
+//   const apiClient = getAPIClient(ctx)
+//   const { ['access_token']: token } = parseCookies(ctx);
+
+//   if (!token) {
+//     return {
+//       redirect: {
+//         destination: '/login',
+//         permanent: false,
+//       }
+//     }
+//   }
+
+//   return {
+//     props: {}
+//   }
+// }
