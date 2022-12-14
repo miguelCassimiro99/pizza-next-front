@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form"
+import { AuthContext } from '../contexts/AuthContext'
 
 export interface FormValues {
   email: string;
@@ -7,9 +9,15 @@ export interface FormValues {
 
 export default function Login() {
   const { register, handleSubmit } = useForm<FormValues>();
+  const { signIn } = useContext(AuthContext)
 
-  function handleSignIn(data: FormValues) {
-    console.log("Login ", data)
+  async function handleSignIn(data: FormValues) {
+    try {
+      await signIn(data);
+
+    } catch (error) {
+      throw new Error("Something went wrong");
+    }
   }
 
   return (
