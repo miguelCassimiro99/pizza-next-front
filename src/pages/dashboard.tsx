@@ -68,7 +68,7 @@ export default function Dashboard() {
   return (
     <div className="h-screen w-full">
       <nav className="w-full h-16 bg-slate-900 absolute flex justify-between px-4 items-center text-white">
-        <span>Welcome { user?.name }</span>
+        <span>Welcome, { user?.name }</span>
         <button className="cursor-pointer" onClick={() => logout()} >
           Logout
         </button>
