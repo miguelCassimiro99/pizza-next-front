@@ -1,11 +1,12 @@
 import Router from "next/router";
 import { destroyCookie, parseCookies } from "nookies";
 import { useContext, useEffect, useState } from 'react';
-import RepositoryCard, { RepositoryCardProps } from "../components/RepositoryCard";
+import RepositoryCard from "../components/RepositoryCard";
 import { AuthContext } from "../contexts/AuthContext";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { TrashIcon  } from '@heroicons/react/24/solid'
+import { IRepositoryProps } from "../types/default";
 
 interface FormValue {
   username: string;
@@ -15,7 +16,7 @@ interface FormValue {
 export default function Dashboard() {
   const { user } = useContext(AuthContext);
   const { register, handleSubmit } = useForm<FormValue>();
-  const [repositories , setReposList] = useState<RepositoryCardProps[] | undefined>([])
+  const [repositories , setReposList] = useState<IRepositoryProps[] | undefined>([])
   const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
@@ -36,14 +37,14 @@ export default function Dashboard() {
 
       const url = `https://api.github.com/users/${data.username}/repos`
 
-      const response = await axios.get<RepositoryCardProps[]>(url);
+      const response = await axios.get<IRepositoryProps[]>(url);
 
       if(!response.data) {
         setErrorMessage("user not found or doesn't have public repositories");
       }
 
-      const repoList = [] as RepositoryCardProps[]
-      response.data.forEach((repo: RepositoryCardProps) => {
+      const repoList = [] as IRepositoryProps[]
+      response.data.forEach((repo: IRepositoryProps) => {
         let repoJson = {
           name: repo.name,
           createdAt: repo.createdAt,
@@ -52,7 +53,7 @@ export default function Dashboard() {
           description: repo.description,
           language: repo.language,
           url: repo.url
-        } as RepositoryCardProps
+        } as IRepositoryProps
         repoList.push(repoJson);
       })
 
