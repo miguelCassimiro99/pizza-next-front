@@ -1,18 +1,9 @@
 import Link from "next/link";
 import { BugAntIcon, ComputerDesktopIcon  } from '@heroicons/react/24/solid'
-
-export interface RepositoryCardProps {
-  name: string
-  id: number
-  description: string
-  url: string
-  language: string
-  open_issues_count: number
-  createdAt: string
-}
+import { IRepositoryProps } from "../types/default";
 
 
-export default function RepositoryCard({ name, id, description, url, language, open_issues_count, createdAt }: RepositoryCardProps) {
+export default function RepositoryCard({ name, id, description, url, language, open_issues_count, createdAt }: IRepositoryProps) {
   return (
     <article className="min-w-[300px] h-52 border border-gray-800 px-8 py-4 rounded-md shadow-lg overflow-hidden">
       <Link href={url} target="_blank" className="cursor-pointer">
