@@ -37,12 +37,12 @@ export default function Dashboard() {
 
   useEffect(() => {
     const { 'access_token': token } = parseCookies();
-    if(!token) Router.push('/login');
+    if(!token) Router.push('/');
   }, [])
 
   function logout() {
     destroyCookie(undefined, 'access_token');
-    Router.push('/login');
+    Router.push('/');
   }
 
   async function getRepositoriesList(data: FormValue) {
