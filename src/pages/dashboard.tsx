@@ -100,6 +100,16 @@ export default function Dashboard() {
     setUserRepositoryList( collection );
   }
 
+  function showSelectedUserRepoList(id: number | undefined) {
+    if(!id) return;
+
+    setReposList([]);
+    
+    repositoriesList?.forEach(repo => {
+      if(repo.user?.id === id) setReposList(repo.repositories);
+    })
+  }
+
   return (
     <div className="h-screen w-full">
       <nav className="w-full h-16 bg-slate-900 absolute flex justify-between px-4 items-center text-white">
@@ -132,7 +142,7 @@ export default function Dashboard() {
         <div className="flex items-center justify-center overflow-auto space-x-3 my-2">         
           {repositoriesList && repositoriesList.length > 0 ? (
             repositoriesList.map(collection => (
-              <button key={collection.user?.id}>
+              <button key={collection.user?.id} onClick={() => showSelectedUserRepoList(collection.user?.id)}>
                 <GithubUserCard login={collection.user?.login} avatar_url={collection.user?.avatar_url} />
               </button>
             ))
